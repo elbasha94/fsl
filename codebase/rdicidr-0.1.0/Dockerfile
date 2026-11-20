@@ -1,21 +1,18 @@
 FROM node:15 as builder
 
-WORKDIR
+WORKDIR /app
 
-COPY
+COPY package*.json ./
 
-RUN 
+RUN npm install
 
-COPY
+COPY . .
 
-RUN 
+RUN npm run build
 
-FROM
+FROM nginx:alpine
 
-WORKDIR
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build /usr/share/nginx/html
 
-COPY
-
-RUN 
-
-ENTRYPOINT 
+EXPOSE 8080
